@@ -1,5 +1,5 @@
 var AUTH = {};
-AUTH.authenticated = null;
+AUTH.authenticated = function() {};
 AUTH.ready = false;
 AUTH.interval = null;
 AUTH.send = function() {
@@ -11,9 +11,7 @@ onmessage = function(e) {
 		AUTH.ready = true;
 	} else if(AUTH.ready && e.data.length == 32) {
 		AUTH.token = e.data;
-		if(AUTH.authenticated !== null) {
-			AUTH.authenticated();
-		}
+		AUTH.authenticated();
 		$('iframe[src=\'https://login.belowaverage.org/\']').remove();
 	}
 };
