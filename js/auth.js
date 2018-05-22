@@ -2,8 +2,18 @@ var AUTH = {};
 AUTH.authenticated = function() {};
 AUTH.ready = false;
 AUTH.interval = null;
+AUTH.frame = null;
 AUTH.send = function() {
-	$('iframe[src=\'https://login.belowaverage.org/\']')[0].contentWindow.postMessage(undefined, 'https://login.belowaverage.org');
+	var frames = document.getElementsByTagName('iframe');
+	var count = 0;
+	while(frames.length > count) {
+		AUTH.frame = frames[count++];
+		if(AUTH.frame.src == 'https://login.belowaverage.org/') {
+			AUTH.frame.contentWindow.postMessage(undefined, 'https://login.belowaverage.org');
+			break;
+		}
+	}
+	
 };
 onmessage = function(e) {
 	if(!AUTH.ready && e.data == 'ready') {
@@ -12,7 +22,7 @@ onmessage = function(e) {
 	} else if(AUTH.ready && e.data.length == 32) {
 		AUTH.token = e.data;
 		AUTH.authenticated();
-		$('iframe[src=\'https://login.belowaverage.org/\']').remove();
+		AUTH.frame.remove();
 	}
 };
 $(document).ready(function() {
