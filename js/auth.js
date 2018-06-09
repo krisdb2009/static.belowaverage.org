@@ -3,6 +3,7 @@ AUTH.authenticated = function() {};
 AUTH.ready = false;
 AUTH.interval = null;
 AUTH.frame = null;
+AUTH.token = null;
 AUTH.send = function() {
 	var frames = document.getElementsByTagName('iframe');
 	var count = 0;
@@ -25,6 +26,6 @@ onmessage = function(e) {
 		AUTH.frame.remove();
 	}
 };
-$(document).ready(function() {
+onload = function() {
 	AUTH.interval = setInterval(AUTH.send, 100);
-});
+};
