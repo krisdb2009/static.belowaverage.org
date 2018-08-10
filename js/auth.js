@@ -25,6 +25,7 @@ AUTH.AUTH = function() {
 			AUTH.frame.remove();
 		}
 	};
-	AUTH.interval = setInterval(AUTH.send, 100);
+	AUTH.interval = setInterval(AUTH.send, 5);
 }
-AUTH.AUTH();
+
+window.onload = AUTH.AUTH;
